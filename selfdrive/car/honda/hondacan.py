@@ -34,9 +34,10 @@ def make_can_msg(addr, dat, idx, alt):
   return [addr, 0, dat, alt]
   
 #Clarity
-def create_brake_command(packer, apply_brake, pump_on, pcm_override, pcm_cancel_cmd, fcw, idx, car_fingerprint, has_relay, stock_brake):
+def create_brake_command(packer, apply_brake, pcm_override, pcm_cancel_cmd, fcw, idx, car_fingerprint, has_relay, stock_brake):
   # TODO: do we loose pressure if we keep pump off for long?
   commands = [] #Clarity
+  pump_on = apply_brake > 0 #Clarity
   brakelights = apply_brake > 0
   brake_rq = apply_brake > 0
   pcm_fault_cmd = False
@@ -132,10 +133,11 @@ def create_radar_commands(v_ego, car_fingerprint, new_radar_config, idx):
   msg_0x301 = b"\x00\x00\x5d\x02\x5f\x00\x00" #This is the VEHICLE_STATE_MSG for CAR.CLARITY -wirelessnet2
 
   idx_0x300 = idx
-
+  
   commands.append(make_can_msg(0x300, msg_0x300, idx_0x300, 1))
   commands.append(make_can_msg(0x301, msg_0x301, idx, 1))
   return commands
+
 
 def spam_buttons_command(packer, button_val, idx, car_fingerprint, has_relay):
   values = {
