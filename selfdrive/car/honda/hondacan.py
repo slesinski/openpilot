@@ -37,7 +37,7 @@ def make_can_msg(addr, dat, idx, alt):
 def create_brake_command(packer, apply_brake, pcm_override, pcm_cancel_cmd, fcw, idx, car_fingerprint, has_relay, stock_brake):
   # TODO: do we loose pressure if we keep pump off for long?
   commands = [] #Clarity
-  pump_on = apply_brake > 0 #Clarity
+  pump_on = apply_brake > 0 #Clarity: The brake pump algo causes bad braking performance, so we just leave the pump on if the brakes are being called.
   brakelights = apply_brake > 0
   brake_rq = apply_brake > 0
   pcm_fault_cmd = False
