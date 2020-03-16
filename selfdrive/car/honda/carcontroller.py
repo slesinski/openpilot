@@ -166,10 +166,10 @@ class CarController():
       if (frame % 2) == 0:
         idx = (frame / 2) % 4 #Clarity: Why do we need this? -wirelessnet2
         ts = frame * DT_CTRL
-        #pump_on, self.last_pump_ts = brake_pump_hysteresis(apply_brake, self.apply_brake_last, self.last_pump_ts, ts) #Clarity: Why do we need this? -wirelessnet2
+        pump_on, self.last_pump_ts = brake_pump_hysteresis(apply_brake, self.apply_brake_last, self.last_pump_ts, ts)
         can_sends.extend(hondacan.create_brake_command(self.packer, apply_brake,
           pcm_override, pcm_cancel_cmd, hud.fcw, idx, CS.CP.carFingerprint, CS.CP.isPandaBlack, CS.stock_brake))
-        #self.apply_brake_last = apply_brake #Clarity: Why do we need this? -wirelessnet2
+        self.apply_brake_last = apply_brake
 
         if CS.CP.enableGasInterceptor:
           # send exactly zero if apply_gas is zero. Interceptor will send the max between read value and apply_gas.
