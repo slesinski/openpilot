@@ -47,7 +47,7 @@ def brake_pump_hysteresis(apply_brake, apply_brake_last, last_pump_ts, ts):
     last_pump_ts = ts
 
   # once the pump is on, run it for at least 0.2s
-  if ts - last_pump_ts < 0.2 and apply_brake > 0:
+  if ts - last_pump_ts < 1 and apply_brake > 0:
     pump_on = True
 
   return pump_on, last_pump_ts
