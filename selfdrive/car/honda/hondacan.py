@@ -121,9 +121,9 @@ def create_ui_commands(packer, pcm_speed, hud, car_fingerprint, is_metric, idx, 
   return commands
 
 #Clarity: Since we don't have a factory ADAS Camera to drive the Radar, we have to create the messages ourselves. -wirelessnet2
-def create_radar_commands(v_ego, car_fingerprint, new_radar_config, idx):
+def create_radar_commands(packer, v_ego, car_fingerprint, new_radar_config, idx):
   """Creates an iterable of CAN messages for the radar system."""
-  bus = 1
+  radar_bus = 1
   commands = []
   v_ego_kph = np.clip(int(round(v_ego * CV.MS_TO_KPH)), 0, 255)
   speed = struct.pack('!B', v_ego_kph)
@@ -133,8 +133,10 @@ def create_radar_commands(v_ego, car_fingerprint, new_radar_config, idx):
                b'\x00\x00')
   msg_0x301 = b"\x00\x00\x5d\x02\x5f\x00\x00" #This is the VEHICLE_STATE_MSG for CAR.CLARITY -wirelessnet2
   
-  commands.append(make_can_msg(0x300, msg_0x300, idx, bus))
-  commands.append(make_can_msg(0x301, msg_0x301, idx, bus))
+  commands.append(packer.make_can_msg(0x300, radar_bus, msg_0x300, idx))
+  commands.append(packer.make_can_msg(0x301, radar_bus, msg_0x301, idx))
+  #commands.append(make_can_msg(0x300, msg_0x300, idx, bus))
+  #commands.append(make_can_msg(0x301, msg_0x301, idx, bus))
   return commands
 
 
