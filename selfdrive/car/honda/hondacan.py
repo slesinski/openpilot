@@ -129,7 +129,7 @@ def create_radar_commands(packer, v_ego, car_fingerprint, new_radar_config, idx)
   speed = struct.pack('!B', v_ego_kph)
 
   msg300 = {
-    'SET_ME_XF9': 0XF9,
+    'SET_ME_XF9': 0xF9,
     'VEHICLE_SPEED': speed.hex(),
     'SET_ME_X8A': 0x8A,
     'SET_ME_XD0': 0xD0,
@@ -138,8 +138,8 @@ def create_radar_commands(packer, v_ego, car_fingerprint, new_radar_config, idx)
 
   msg301 = {
     'SET_ME_X5D': 0x5D, #This is 1/3 of the VEHICLE STATE MSG for the Clarity. -wirelessnet2
-    'SET_ME_X02': 0X02, #This is 1/3 of the VEHICLE STATE MSG for the Clarity. -wirelessnet2
-    'SET_ME_X5F': 0X5F, #This is 1/3 of the VEHICLE STATE MSG for the Clarity. -wirelessnet2
+    'SET_ME_X02': 0x02, #This is 1/3 of the VEHICLE STATE MSG for the Clarity. -wirelessnet2
+    'SET_ME_X5F': 0x5F, #This is 1/3 of the VEHICLE STATE MSG for the Clarity. -wirelessnet2
   }
 
   commands.append(packer.make_can_msg('VEHICLE_STATE', radar_bus, msg300, idx))
