@@ -145,3 +145,21 @@ def spam_buttons_command(packer, button_val, idx, car_fingerprint, has_relay):
   }
   bus = get_pt_bus(car_fingerprint, has_relay)
   return packer.make_can_msg("SCM_BUTTONS", bus, values, idx)
+
+#Clarity: Since we don't have a factory ADAS Camera to drive the Radar, we have to create the messages ourselves. -wirelessnet2
+def create_radar_commands(packer, v_ego, car_fingerprint, new_radar_config, idx):
+  """Creates an iterable of CAN messages for the radar system."""
+  radar_bus = 1
+  commands = []
+  v_ego_kph = np.clip(int(round(v_ego * CV.MS_TO_KPH)), 0, 255)
+  speed = struct.pack('!B', v_ego_kph)
+
+  values = {
+    'MSG300': (b'\xf9' + speed + b'\x8a\xd0' +
+               (b'\x20' if idx == 0 or idx == 3 else b'\x00') +
+               b'\x00\x00'),
+    'MSG301': b"\x00\x00\x5d\x02\x5f\x00\x00",
+  }
+
+  commands.append(packer.make_can_msg('RADAR', radar_bus, values, idx))
+  return commands
