@@ -130,7 +130,7 @@ def create_radar_commands(packer, v_ego, car_fingerprint, new_radar_config, idx)
 
   msg300 = {
     'SET_ME_XF9': 0xF9,
-    'VEHICLE_SPEED': speed.hex(),
+    'VEHICLE_SPEED': 0x00,
     'SET_ME_X8A': 0x8A,
     'SET_ME_XD0': 0xD0,
     'SALTED_WITH_IDX': 0x20 if idx == 0 or idx == 3 else 0x00,
